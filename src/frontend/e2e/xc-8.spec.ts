@@ -13,6 +13,11 @@ import { expect, test } from "./fixtures"
 
 const TIMELINE = "**/api/timeline?**"
 
+// The names a manual paging control would have. Phrases, not single words, so an unrelated
+// control such as "Load image" or "More options" doesn't count.
+const PAGING_CONTROL =
+  /^(next|older|more)$|next page|previous page|load more|show more|more tweets|older tweets|page \d/i
+
 // A 48×48 blue PNG: the API sniffs the file's bytes, so it has to be a real image.
 const PNG = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAAQklEQVR4nO3OQQ0AIAwAsRlBOSaRgAuOR5MK6Kx9vjL5QEhISKgeCAkJCdUDISEhoXogJCQkVA+EhISE6oGQkNBjF0/q6NMLL3wZAAAAAElFTkSuQmCC",
@@ -116,10 +121,8 @@ test.describe("XC-8: Scroll the home timeline", () => {
       expect(requests.filter((u) => u.searchParams.has("cursor"))).toHaveLength(0)
     })
     await evidence.step("There is no \"next page\" or \"load more\" button", async () => {
-      await expect(
-        page.getByRole("button", { name: /next|more|older|load|page/i })
-      ).toHaveCount(0)
-      await expect(page.getByRole("link", { name: /next|more|older|load|page/i })).toHaveCount(0)
+      await expect(page.getByRole("button", { name: PAGING_CONTROL })).toHaveCount(0)
+      await expect(page.getByRole("link", { name: PAGING_CONTROL })).toHaveCount(0)
     })
     await evidence.step("Scroll down: more tweets load by themselves", async () => {
       await tweets(page).last().scrollIntoViewIfNeeded()
@@ -166,6 +169,8 @@ test.describe("XC-8: Scroll the home timeline", () => {
       const time = card(withImage).locator("time")
       await expect(time).toBeVisible()
       await expect(time).toHaveAttribute("datetime", withImage.createdAt)
+      // Compact relative form ("5s", "3m"…). This holds because the tweet was posted moments
+      // ago: past a week the card shows a date instead (see formatRelativeTime).
       await expect(time).toHaveText(/^\d+[smhd]$/)
     })
     await evidence.step("It shows the text", async () => {
