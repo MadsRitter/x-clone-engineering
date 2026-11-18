@@ -75,6 +75,11 @@ src/frontend/src/
   `src/frontend/.env.example` and `src/frontend/vite.config.ts`'s `/api` proxy) — never hardcode
   the API origin in application code.
 
+## Workflow
+
+- Run `pnpm lint` and fix any TypeScript errors before considering any task complete, and prefer
+  editing existing components over creating new ones.
+
 ## The @xbot assistant
 
 - `@xbot` is an assistant account on the shared API. Mentioning it in a tweet
