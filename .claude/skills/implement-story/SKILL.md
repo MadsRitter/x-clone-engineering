@@ -11,6 +11,7 @@ worked breaks. Usage: `/implement-story <KEY>`. Run from the repository root.
 
 ## References (in this skill's own folder)
 
+- `reference/factory-loop.md`: the self-verification loop. Follow it exactly.
 - `reference/board-api.md`: how to move a ticket and comment on it.
 
 ## Steps
@@ -32,9 +33,8 @@ worked breaks. Usage: `/implement-story <KEY>`. Run from the repository root.
 4. **Build.** Change the app in `src/frontend/src/` following `CLAUDE.md`: reuse
    `components/ui/` and the `queries/` pattern, and keep the existing code style. Add Vitest
    tests for any logic you add. Never edit generated files or the story text.
-5. **Verify.** From `src/frontend` (dev server running, sign-in saved with `pnpm e2e:login`), run
-   `pnpm exec tsc -b`, `pnpm lint` and `pnpm e2e e2e/<key>.spec.ts`. Fix the code and run them
-   again until all three pass. Stop after 5 tries and report what blocks you.
+5. **Verify.** Run the loop in `reference/factory-loop.md` until everything is green, or until it
+   tells you to stop.
 6. **Hand over.**
    - **Green:** commit with the message `<KEY>: <story title>`. Move the ticket to
      **In Review** and comment: the files changed, each check and its result, and anything a
