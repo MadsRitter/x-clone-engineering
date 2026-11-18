@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { useQuery } from "@tanstack/react-query"
+import { Timeline } from "@/components/timeline/timeline"
 import { sessionQueryOptions } from "@/lib/session"
 import { getDisplayName } from "@/lib/user"
 
@@ -12,11 +13,9 @@ function Home() {
   const displayName = session?.user ? getDisplayName(session.user) : "there"
 
   return (
-    <div className="flex flex-col gap-2">
-      <h1 className="text-2xl font-bold">Welcome, {displayName}!</h1>
-      <p className="text-muted-foreground">
-        You're signed in. This is where your work starts.
-      </p>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-xl font-bold">Welcome, {displayName}!</h1>
+      <Timeline />
     </div>
   )
 }
