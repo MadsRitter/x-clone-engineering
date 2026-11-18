@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { useQuery } from "@tanstack/react-query"
+import { Composer } from "@/components/timeline/composer"
 import { Timeline } from "@/components/timeline/timeline"
 import { sessionQueryOptions } from "@/lib/session"
 import { getDisplayName } from "@/lib/user"
@@ -15,6 +16,7 @@ function Home() {
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-xl font-bold">Welcome, {displayName}!</h1>
+      <Composer />
       <Timeline />
     </div>
   )
