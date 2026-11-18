@@ -207,7 +207,9 @@ test.describe("XC-8: Scroll the home timeline", () => {
       await page.goto("/")
     })
     await evidence.step("A simple message says there are no tweets yet", async () => {
-      await expect(page.getByText("No tweets yet")).toBeVisible()
+      // Inside the page's main content, so the evidence caption (which says the same words)
+      // can't match.
+      await expect(page.getByRole("main").getByText("No tweets yet.", { exact: true })).toBeVisible()
       await expect(page.getByRole("article")).toHaveCount(0)
     })
   })
