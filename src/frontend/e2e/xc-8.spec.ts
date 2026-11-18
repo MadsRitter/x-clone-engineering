@@ -10,6 +10,10 @@ import { expect, test } from "./fixtures"
 // following is out of scope for v1). So the tests that need tweets post their own, as the
 // signed-in account, through the dev server's /api proxy. The API has no delete, so each run
 // leaves a few short "XC-8 e2e" tweets on that account.
+//
+// AC1 as written says "tweets from all users". The product owner relaxed it to match the API
+// (board comment on XC-8, 2026-11-18): the timeline shows what GET /api/timeline returns, newest
+// first. The AC1 test checks exactly that: the order, and that the screen matches the API.
 
 const TIMELINE = "**/api/timeline?**"
 
